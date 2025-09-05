@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Loan Dashboard | Tupesa Leo</title>
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="192x192" href="icons/icon.192.png"/>
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon.512.png"/>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-light: #4895ef;
+      --secondary: #3f37c9;
+      --white: #ffffff;
+      --black: #1a1a1a;
+      --gray: #6c757d;
+      --light-gray: #f8f9fa;
+      --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      --border-radius: 16px;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      min-height: 100vh;
+      background-color: var(--light-gray);
+      color: var(--black);
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      background: var(--gradient);
+      color: white;
+      padding: 20px 16px;
+      text-align: center;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .logo span {
+      background: var(--white);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: var(--white);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      border-bottom: 1px solid rgba(67, 97, 238, 0.1);
+    }
+    .logout-btn {
+      background: var(--gradient);
+      color: var(--white);
+      border: none;
+      border-radius: var(--border-radius);
+      padding: 10px 18px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+    }
+    .logout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(67, 97, 238, 0.3);
+    }
+    .logout-btn:active {
+      transform: translateY(0);
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      flex: 1;
+    }
+    .welcome-message {
+      text-align: center;
+      margin: 24px 0;
+    }
+    .welcome-title {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+    .welcome-subtitle {
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+    .loan-card {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 24px;
+      margin: 24px 0;
+      box-shadow: 0 4px 20px rgba(67, 97, 238, 0.1);
+      border: 1px solid rgba(67, 97, 238, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .loan-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100px;
+      height: 100px;
+      background: rgba(67, 97, 238, 0.05);
+      border-radius: 50%;
+      transform: translate(40px, -40px);
+    }
+    .loan-status {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: rgba(67, 97, 238, 0.1);
+      color: var(--primary);
+    }
+    .loan-details {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .detail-item {
+      background: var(--light-gray);
+      border-radius: var(--border-radius);
+      padding: 16px;
+      border: 1px solid rgba(67, 97, 238, 0.1);
+      transition: transform 0.3s;
+    }
+    .detail-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(67, 97, 238, 0.1);
+    }
+    .detail-label {
+      font-size: 0.85rem;
+      color: var(--gray);
+      margin-bottom: 6px;
+    }
+    .detail-value {
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+    .loan-amount {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+    .trust-badges {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 28px 0;
+    }
+    .trust-badge {
+      background: var(--white);
+      padding: 10px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border: 1px solid rgba(67, 97, 238, 0.1);
+    }
+    .trust-badge i {
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+    .footer {
+      text-align: center;
+      padding: 20px;
+      background: var(--black);
+      color: var(--white);
+      font-size: 0.85rem;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover {
+      color: var(--primary-light);
+    }
+    .spinner {
+      display: none;
+      width: 48px;
+      height: 48px;
+      margin: 40px auto;
+      border: 5px solid rgba(67, 97, 238, 0.1);
+      border-radius: 50%;
+      border-top: 5px solid var(--primary);
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 16px; }
+      .loan-card { padding: 20px; }
+      .welcome-title { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div class="logo">
+      
+      <span>Tupesa Leo</span>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <div></div>
+    <button class="logout-btn" id="logout-btn">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+  </nav>
+
+  <div class="container">
+    <div class="spinner" id="loading-spinner"></div>
+
+    <div id="dashboard-content" style="display:none;">
+      <div class="welcome-message">
+        <h1 class="welcome-title" id="welcome-title">Welcome</h1>
+        <p class="welcome-subtitle">Your loan application dashboard</p>
+      </div>
+
+      <div class="loan-card">
+        <div class="loan-status">
+          <p>Your loan application status</p>
+          <div class="status-badge" id="status-badge">Approved</div>
+        </div>
+
+        <div class="loan-details">
+          <div class="detail-item">
+            <div class="detail-label">Loan Amount</div>
+            <div class="detail-value loan-amount" id="loan-amount">Ksh 0</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Processing Fee</div>
+            <div class="detail-value" id="processing-fee">Ksh 0</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Repayment Amount</div>
+            <div class="detail-value" id="repayment-amount">Ksh 0</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Disbursement Time</div>
+            <div class="detail-value">Within 48 hours</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Due Date</div>
+            <div class="detail-value" id="due-date">--/--/----</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Reference Number</div>
+            <div class="detail-value">PP-<span id="ref-number">XXXXXX</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust-badges">
+        <div class="trust-badge">
+          <i class="fas fa-shield-alt"></i><span>Secure</span>
+        </div>
+        <div class="trust-badge">
+          <i class="fas fa-certificate"></i><span>CBK Licensed</span>
+        </div>
+        <div class="trust-badge">
+          <i class="fas fa-headset"></i><span>24/7 Support</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="#">Home</a>
+      <a href="#">How It Works</a>
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+    </div>
+    <p>© 2023 Tupesa Leo Limited. Licensed by CBK.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const spinner = document.getElementById('loading-spinner');
+      const content = document.getElementById('dashboard-content');
+      const logoutBtn = document.getElementById('logout-btn');
+
+      function showLoading() { 
+        spinner.style.display = 'block'; 
+        content.style.display = 'none';
+      }
+      function hideLoading() { 
+        spinner.style.display = 'none'; 
+        content.style.display = 'block';
+      }
+      function generateRefNumber() {
+        const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let result = '';
+        for (let i = 0; i < 7; i++) {
+          result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+      }
+      function formatDate(date) {
+        return date.toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+      }
+      function loadLoanData() {
+        const loanData = JSON.parse(sessionStorage.getItem('myLoan') || '{}');
+        const userData = JSON.parse(sessionStorage.getItem('userData') || '{}');
+        if (userData.name) {
+          document.getElementById('welcome-title').textContent = `Hi ${userData.name}`;
+        }
+        if (loanData.loan_amount) {
+          document.getElementById('loan-amount').textContent = `Ksh ${parseInt(loanData.loan_amount).toLocaleString()}`;
+          document.getElementById('processing-fee').textContent = `Ksh ${loanData.processing_fee || 0}`;
+          const repayment = parseInt(loanData.loan_amount) * 1.1;
+          document.getElementById('repayment-amount').textContent = `Ksh ${repayment.toLocaleString()}`;
+          const dueDate = new Date();
+          dueDate.setMonth(dueDate.getMonth() + 2);
+          document.getElementById('due-date').textContent = formatDate(dueDate);
+          document.getElementById('ref-number').textContent = generateRefNumber();
+        } else {
+          window.location.href = 'apply.html';
+        }
+      }
+
+      showLoading();
+      setTimeout(() => {
+        loadLoanData();
+        hideLoading();
+      }, 2000);
+
+      logoutBtn.addEventListener('click', function() {
+        showLoading();
+        setTimeout(() => {
+          sessionStorage.removeItem('myLoan');
+          sessionStorage.removeItem('userData');
+          window.location.href = 'index.html';
+        }, 1000);
+      });
+    });
+  </script>
+</body>
+</html>
